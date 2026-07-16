@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Models\Candidat;
 
 return [
 
@@ -37,12 +37,12 @@ return [
     |
     */
 
-    'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+'guards' => [
+    'web' => [
+        'driver' => 'session',
+        'provider' => 'candidats',
     ],
+],
 
     /*
     |--------------------------------------------------------------------------
@@ -61,11 +61,7 @@ return [
     |
     */
 
-    'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', User::class),
-        ],
+use App\Models\Candidat;
 
         // 'users' => [
         //     'driver' => 'database',
@@ -111,6 +107,30 @@ return [
     | confirmation screen. By default, the timeout lasts for three hours.
     |
     */
+
+
+
+
+
+
+
+    'providers' => [
+    'candidats' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Candidat::class,
+    ],
+],
+
+
+
+
+
+
+
+
+
+
+
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
