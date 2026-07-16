@@ -1,65 +1,60 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\EntrepriseRequest;
 use App\Models\Entreprise;
-use Illuminate\Http\Request;
 
 class EntrepriseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Afficher toutes les entreprises
     public function index()
     {
-        //
+        return response()->json(Entreprise::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // Ajouter une entreprise
+    public function store(EntrepriseRequest $request)
     {
-        //
+        $entreprise = Entreprise::create($request->validated());
+
+        return response()->json([
+            'message' => 'Entreprise créée avec succès',
+            'entreprise' => $entreprise,
+        ], 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    // Afficher une entreprise
+    public function show(string $id)
     {
-        //
+        $entreprise = Entreprise::findOrFail($id);
+
+        return response()->json($entreprise);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Entreprise $entreprise)
+    // Modifier une entreprise
+    public function update(EntrepriseRequest $request, string $id)
     {
-        //
+        $entreprise = Entreprise::findOrFail($id);
+
+        $entreprise->update($request->validated());
+
+        return response()->json([
+            'message' => 'Entreprise modifiée avec succès',
+            'entreprise' => $entreprise,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Entreprise $entreprise)
+    // Supprimer une entreprise
+    public function destroy(string $id)
     {
-        //
-    }
+        $entreprise = Entreprise::findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Entreprise $entreprise)
-    {
-        //
-    }
+        $entreprise->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Entreprise $entreprise)
-    {
-        //
+        return response()->json([
+            'message' => 'Entreprise supprimée avec succès'
+        ]);
     }
 }

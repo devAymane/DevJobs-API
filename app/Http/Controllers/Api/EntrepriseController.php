@@ -3,47 +3,58 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\EntrepriseRequest;
+use App\Models\Entreprise;
 
 class EntrepriseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Afficher toutes les entreprises
     public function index()
     {
-        //
+        return response()->json(Entreprise::all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    // Ajouter une entreprise
+    public function store(EntrepriseRequest $request)
     {
-        //
+        $entreprise = Entreprise::create($request->validated());
+
+        return response()->json([
+            'message' => 'Entreprise créée avec succès',
+            'entreprise' => $entreprise,
+        ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // Afficher une entreprise
     public function show(string $id)
     {
-        //
+        $entreprise = Entreprise::findOrFail($id);
+
+        return response()->json($entreprise);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    // Modifier une entreprise
+    public function update(EntrepriseRequest $request, string $id)
     {
-        //
+        $entreprise = Entreprise::findOrFail($id);
+
+        $entreprise->update($request->validated());
+
+        return response()->json([
+            'message' => 'Entreprise modifiée avec succès',
+            'entreprise' => $entreprise,
+        ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Supprimer une entreprise
     public function destroy(string $id)
     {
-        //
+        $entreprise = Entreprise::findOrFail($id);
+
+        $entreprise->delete();
+
+        return response()->json([
+            'message' => 'Entreprise supprimée avec succès'
+        ]);
     }
 }
