@@ -14,12 +14,14 @@ class AuthController extends Controller
 {
     public function register(RegisterRequest $request)
     {
-        $candidat = Candidat::create([
-            'prenom' => $request->prenom,
-            'nom' => $request->nom,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+$candidat = Candidat::create([
+    'prenom' => $request->prenom,
+    'nom' => $request->nom,
+    'email' => $request->email,
+    'password' => Hash::make($request->password),
+]);
+
+$candidat->assignRole('candidat');
 
         return response()->json([
             'message' => 'Compte créé avec succès',
