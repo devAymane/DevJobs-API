@@ -23,6 +23,8 @@ $candidat = Candidat::create([
 
 $candidat->assignRole('candidat');
 
+// $candidat->assignRole('candidat');
+
         return response()->json([
             'message' => 'Compte créé avec succès',
             'candidat' => $candidat,
