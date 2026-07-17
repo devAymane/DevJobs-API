@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Candidat;
 
 class CandidatController extends Controller
 {
@@ -46,4 +47,20 @@ class CandidatController extends Controller
     {
         //
     }
+
+
+
+    
+public function attachCompetences(Request $request, $id)
+{
+    $candidat = Candidat::findOrFail($id);
+
+    $candidat->competences()->sync($request->competences);
+
+    return response()->json([
+        'message' => 'Compétences ajoutées'
+    ]);
 }
+}
+
+

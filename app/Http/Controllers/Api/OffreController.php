@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OffreRequest;
 use App\Models\Offre;
+use Illuminate\Http\Request;
+
+
+
 
 class OffreController extends Controller
 {
@@ -57,4 +61,19 @@ class OffreController extends Controller
             'message' => 'Offre supprimée avec succès'
         ]);
     }
+
+
+    public function attachCompetences(Request $request, $id)
+{
+    $offre = Offre::findOrFail($id);
+
+    $offre->competences()->sync($request->competences);
+
+    return response()->json([
+        'message' => 'Compétences liées à l\'offre'
+    ]);
+}
+
+
+
 }

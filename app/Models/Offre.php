@@ -31,4 +31,7 @@ class Offre extends Model
     {
         return $this->belongsToMany(Competence::class);
     }
+
+
+    
 }

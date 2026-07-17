@@ -22,4 +22,7 @@ class Competence extends Model
     {
         return $this->belongsToMany(Offre::class);
     }
+
+
+    
 }

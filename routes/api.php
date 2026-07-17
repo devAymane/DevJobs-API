@@ -8,6 +8,14 @@ use App\Http\Controllers\Api\CandidatureController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\CompetenceController;
 
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\CandidatController;
+
+
+
+
+
 // Auth
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -41,3 +49,24 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
 });
+
+
+
+
+Route::middleware(['auth:sanctum','role:admin'])->group(function () {
+
+    Route::apiResource('users', UserController::class);
+
+    Route::get('/admin/statistiques', [AdminController::class,'stats']);
+
+});
+
+
+
+Route::post('/offres/{id}/competences',
+    [OffreController::class,'attachCompetences']
+)->middleware('auth:sanctum');
+
+
+Route::post('/offres/{id}/competences', [OffreController::class,'attachCompetences'])
+    ->middleware('auth:sanctum');
